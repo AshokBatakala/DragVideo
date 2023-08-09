@@ -114,7 +114,7 @@ def align_face(filepath, predictor, output_size):
     return img
 
 
-
+# exact copy of align_face; for debugging
 def align_face_new(filepath, predictor, output_size,enable_padding=True):
     """
     :param filepath: str
