@@ -1,4 +1,5 @@
-# any changes to the path_configs should be done here
-
-name = "ashok"
-input_data_id ="ak"
+e4e= '/home/bean/DragVideo/DragGAN/_PTI/pretrained_models/e4e_ffhq_encode.pt'
+stylegan2_ada_ffhq= '/home/bean/DragVideo/DragGAN/_PTI/pretrained_models/ffhq.pkl'
+checkpoints_dir= '/home/bean/DragVideo/Data_store/experiments/exp_01_man/tuned_SG'
+embedding_base_dir= '/home/bean/DragVideo/Data_store/experiments/exp_01_man/latents'
+input_data_path= '/home/bean/DragVideo/Data_store/experiments/exp_01_man/aligned'

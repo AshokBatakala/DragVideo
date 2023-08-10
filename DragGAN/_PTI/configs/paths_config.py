@@ -14,9 +14,8 @@
 
 # turn above paths to absolute paths
 # ----------------------------------------------------------------
-
-main_root_path = '/home/bean/DragVideo/PTI'
-
+main_root_path = '/home/bean/DragVideo/DragGAN/_PTI'
+# ----------------------------------------------------------------
 ## Pretrained models paths
 e4e = f'{main_root_path}/pretrained_models/e4e_ffhq_encode.pt'
 stylegan2_ada_ffhq = f'{main_root_path}/pretrained_models/stylegan3-r-ffhqu-256x256.pkl' #stylegan3

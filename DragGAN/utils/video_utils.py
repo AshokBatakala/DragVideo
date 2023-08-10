@@ -88,11 +88,15 @@ def make_video(path,
 # video_path = "alien_girl.mp4"
 # output_path = "frames/"
 
-def extract_frames(video_path, output_path):
-    # imports 
+def extract_frames(video_path, output_path,n_digits_in_name=3):
+    """
+    number of digits in name to make it easier to sort
+    creates .jpg files
+    """
+    
     import cv2
     import os
-
+    
     # Read the video from specified path
     cam = cv2.VideoCapture(video_path)
     # extract frames
@@ -110,7 +114,7 @@ def extract_frames(video_path, output_path):
         ret,frame = cam.read()
         if ret:
             # if video is still left continue creating images
-            name = os.path.join(output_path, str(currentframe) + '.jpg')
+            name = os.path.join(output_path, str(currentframe).zfill(n_digits_in_name) + '.jpg')
             print ('Creating...' + name)
             # writing the extracted images
             cv2.imwrite(name, frame)
