@@ -26,9 +26,14 @@ def load_generators(model_id, image_name):
 
 
 
+
+
+
+
+
 #code from : https://github.com/danielroich/PTI/issues/26 , plus little bit modification
 
-def export_updated_pickle(new_G,model_id):
+def export_updated_pickle(new_G,model_id,name = 'stylegan2'):
   print("Exporting large updated pickle based off new generator and ffhq.pkl")
   with open(paths_config.stylegan2_ada_ffhq, 'rb') as f:
     d = pickle.load(f)
@@ -42,21 +47,21 @@ def export_updated_pickle(new_G,model_id):
   tmp['training_set_kwargs'] = None
   tmp['augment_pipe'] = None
 
-  with open(f'{paths_config.checkpoints_dir}/stylegan3_{model_id}.pkl', 'wb') as f:
+  with open(f'{paths_config.checkpoints_dir}/{name}_{model_id}.pkl', 'wb') as f:
       pickle.dump(tmp, f)
 
 
 
 
-model_id = '/home/bean/DragVideo/Data_store/model_weights/sg3_3rdtime_weights/sg3-r-ffhq-1024_module.pt'
-use_multi_id_training = True
+# model_id = '/home/bean/DragVideo/Data_store/model_weights/sg3_3rdtime_weights/sg3-r-ffhq-1024_module.pt'
+# use_multi_id_training = True
 
-generator_type = paths_config.multi_id_model_type if use_multi_id_training else image_name
-old_G, new_G = load_generators(model_id, generator_type)
-
-
-
-export_updated_pickle(new_G,model_id)
+# generator_type = paths_config.multi_id_model_type if use_multi_id_training else image_name
+# old_G, new_G = load_generators(model_id, generator_type)
 
 
-model_id # 'AXOCWYGCAEDY'for 10 images
+
+# export_updated_pickle(new_G,model_id)
+
+
+# model_id # 'AXOCWYGCAEDY'for 10 images

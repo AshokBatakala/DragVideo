@@ -27,7 +27,8 @@ def do_drag(w_load_path=None,
 #----------------------------------------------
 import pickle
 import numpy as np
-from utils.list2dict import list2dict
+# from utils.list2dict import list2dict
+from utils_draggan.draggan_utils import list2dict
 
 # get points used in argument
 def modify_landmarks(landmarks_path):
