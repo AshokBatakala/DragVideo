@@ -14,7 +14,9 @@
 
 # turn above paths to absolute paths
 # ----------------------------------------------------------------
-main_root_path = '/home/bean/DragVideo/DragGAN/_PTI'
+# main_root_path = '/home/bean/DragVideo/DragGAN/_PTI'
+
+main_root_path ="/Ext_4T_SSD/ASHOK/DragVideo/DragGAN/_PTI"
 # ----------------------------------------------------------------
 ## Pretrained models paths
 e4e = f'{main_root_path}/pretrained_models/e4e_ffhq_encode.pt'
@@ -33,7 +35,10 @@ dlib = f'{main_root_path}/pretrained_models/align.dat'
 
 
 # changed to inside the draggan folder ; so that draggan can useit
-DragGan_base_path = "/home/bean/DragVideo/"
+# DragGan_base_path = "/home/bean/DragVideo/"
+DragGan_base_path = "/Ext_4T_SSD/ASHOK/DragVideo/DragGAN"
+# ----------------------------------------------------------------
+
 checkpoints_dir = DragGan_base_path + '/DragGAN/PTI_results/checkpoints' # tuned_stylegan_weights
 embedding_base_dir = DragGan_base_path +'/DragGAN/PTI_results/embeddings' # latents
 

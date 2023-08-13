@@ -15,24 +15,18 @@ regulizer_alpha = 30
 pt_l2_lambda = 1
 pt_lpips_lambda = 1
 
-# ## Steps
-# LPIPS_value_threshold = 0.06
-# max_pti_steps = 350
-# first_inv_steps = 450
-# max_images_to_invert = 30  
-
-
-## Steps # these are changed for trail # ------------------------------
+## Steps
 LPIPS_value_threshold = 0.06
-max_pti_steps = 500
-first_inv_steps = 200
-max_images_to_invert = 200  
+max_pti_steps = 350
+first_inv_steps = 450
+max_images_to_invert = 30  
 
 
-
-
-
-
+# ## Steps # these are changed for trail # ------------------------------
+# LPIPS_value_threshold = 0.06
+# max_pti_steps = 500
+# first_inv_steps = 200
+# max_images_to_invert = 200  
 
 
 

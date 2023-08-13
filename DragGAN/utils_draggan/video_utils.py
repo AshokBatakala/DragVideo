@@ -88,7 +88,7 @@ def make_video(path,
 # video_path = "alien_girl.mp4"
 # output_path = "frames/"
 
-def extract_frames(video_path, output_path,n_digits_in_name=3):
+def extract_frames(video_path, output_path,n_digits_in_name=3,n_frames=None):
     """
     number of digits in name to make it easier to sort
     creates .jpg files
@@ -109,7 +109,8 @@ def extract_frames(video_path, output_path,n_digits_in_name=3):
         print ('Error: Creating directory of data')
     # frame
     currentframe = 0
-    while(True):
+    n_frames = int(cam.get(cv2.CAP_PROP_FRAME_COUNT)) if n_frames is None else n_frames
+    while(currentframe < n_frames):
         # reading from frame
         ret,frame = cam.read()
         if ret:
