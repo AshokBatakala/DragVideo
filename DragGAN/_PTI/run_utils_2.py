@@ -11,7 +11,7 @@ import torch
 from configs import paths_config, hyperparameters, global_config
 from utils.align_data import pre_process_images
 from scripts.run_pti import run_PTI
-from IPython.display import display
+# from IPython.display import display
 import matplotlib.pyplot as plt
 from scripts.latent_editor_wrapper import LatentEditorWrapper
 
@@ -20,6 +20,8 @@ from scripts.latent_editor_wrapper import LatentEditorWrapper
 
 
 def load_generators(model_id, image_name):
+  # return old_G from SG given to pti
+  # new_G from pti_result
   with open(paths_config.stylegan2_ada_ffhq, 'rb') as f:
     old_G = pickle.load(f)['G_ema'].cuda()
 
