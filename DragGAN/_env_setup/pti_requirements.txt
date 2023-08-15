@@ -1,0 +1,11 @@
+# pip install -r pti_requirements.txt
+
+lpips
+wandb
+# pytorch
+# torchvision
+matplotlib
+dlib
+#some extra packages
+opencv-python
+imutils

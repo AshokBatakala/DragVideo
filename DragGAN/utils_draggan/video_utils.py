@@ -110,6 +110,8 @@ def extract_frames(video_path, output_path,n_digits_in_name=3,n_frames=None):
     # frame
     currentframe = 0
     n_frames = int(cam.get(cv2.CAP_PROP_FRAME_COUNT)) if n_frames is None else n_frames
+    #log info 
+    print(f" {int(cam.get(cv2.CAP_PROP_FRAME_COUNT))= } ,{n_frames=} ")
     while(currentframe < n_frames):
         # reading from frame
         ret,frame = cam.read()
