@@ -7,9 +7,8 @@
 5. install pti_requirements
 
 to commit 
-docker container commit -m "cv2" 18449b9d8dcb dragvideo:v4_
-docker run --gpus all --ipc=host --net=host  -it -v $PWD:/home/bean/DragVideo   dragvideo:v4_  /bin/bash
-
+docker container commit -m "pyrallis" 161884d4f309 dragvideo:v5
+docker run --gpus all --ipc=host --net=host  -it -v $PWD:/home/bean/DragVideo   dragvideo:v4  /bin/bash
 
 
 docker images 
@@ -17,3 +16,7 @@ dragvideo:v1 = just conda is installed
 dragvideo:v2 = complete draggan env is installed in conda: stylegan3 ( yml + requirements )
 dragvideo:v3 = pti_requirements
 dragvideo:v4 = cv2 (RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y)
+
+
+example run 
+python prepare_data/preparing_faces_parallel.py --mode align --root_path /home/bean/DragVideo/Data_store/delete/raw

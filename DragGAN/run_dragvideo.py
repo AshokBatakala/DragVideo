@@ -16,7 +16,7 @@ import os
 from auto_drag import do_drag
 from auto_drag import modify_landmarks
 
-def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None):
+def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None,MAX_SIZE=1024):
     """
     CHECKPOINT_PATH: tuned_SG_pkl_path
     """
@@ -29,9 +29,11 @@ def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None):
             'w_load_path': os.path.join(Experiment_path,'latents','barcelona','PTI') + f"/{name}/0.pt",
             'stylegan2_wieghts_path' : CHECKPOINT_PATH,
 
-            'points' : modify_landmarks(landmarks_path),
+            'points' : modify_landmarks(landmarks_path,MAX_SIZE=MAX_SIZE),
             'N_STEPS': N_STEPS,
             'save_path': os.path.join(Experiment_path,'after_drag')+f"/{name}.png",
+            'save_before_drag_path': os.path.join(Experiment_path,'before_drag')+f"/{name}.png",
+            'image_show_path': os.path.join(Experiment_path,'image_show')+f"/{name}.png",
         }
         
     latents_dir = os.path.join(Experiment_path,'latents') + "/barcelona/PTI"
@@ -57,13 +59,14 @@ if __name__ == "__main__":
     parser.add_argument("--Experiment_path", type=str, help="Experiment_path")
     parser.add_argument("--N_STEPS", type=int, help="N_STEPS")
     parser.add_argument("--CHECKPOINT_PATH", type=str, help="CHECKPOINT_PATH")
+    parser.add_argument("--MAX_SIZE", type=int, help="MAX_SIZE",default=1024)
     args = parser.parse_args()
     
     Experiment_path = args.Experiment_path
     N_STEPS = args.N_STEPS
     CHECKPOINT_PATH = args.CHECKPOINT_PATH
     
-    run_dragvideo(Experiment_path,N_STEPS=N_STEPS,CHECKPOINT_PATH=CHECKPOINT_PATH)
+    run_dragvideo(Experiment_path,N_STEPS=N_STEPS,CHECKPOINT_PATH=CHECKPOINT_PATH,MAX_SIZE=args.MAX_SIZE)
     print("Done!")
     
     

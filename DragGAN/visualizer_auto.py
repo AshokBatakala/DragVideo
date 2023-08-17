@@ -441,6 +441,8 @@ class DragVideo:
         self.points_targets_dir = None
         self.output_dir = None
         self.cache_dir = None
+        
+        self.process_samples = []
 
         print('intiating global state....')
         self.global_state = {#gr.State({

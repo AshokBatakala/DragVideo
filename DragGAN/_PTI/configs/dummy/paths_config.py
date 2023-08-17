@@ -1,5 +1,5 @@
 e4e= '/home/bean/DragVideo/Data_store/OLD/model_weights/restyle_e4e_ffhq.pt'
 stylegan2_ada_ffhq= '/home/bean/DragVideo/Data_store/OLD/model_weights/stylegan3_3rdtime_weights/stylegan3-r-ffhq-1024_module.pkl'
-checkpoints_dir= '/home/bean/DragVideo/Data_store/experiments/2023-08-15_20-03-08test_edit/tuned_SG'
-embedding_base_dir= '/home/bean/DragVideo/Data_store/experiments/2023-08-15_20-03-08test_edit/latents'
-input_data_path= '/home/bean/DragVideo/Data_store/experiments/2023-08-15_20-03-08test_edit/aligned'
+checkpoints_dir= '/home/bean/DragVideo/Data_store/experiments/2023-08-16_08-22-29obama_60_frames/tuned_SG'
+embedding_base_dir= '/home/bean/DragVideo/Data_store/experiments/2023-08-16_08-22-29obama_60_frames/latents'
+input_data_path= '/home/bean/DragVideo/Data_store/experiments/2023-08-16_08-22-29obama_60_frames/aligned'

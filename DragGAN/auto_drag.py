@@ -7,7 +7,9 @@ def do_drag(w_load_path=None,
             stylegan2_wieghts_path=None,
             points = dict(),
             N_STEPS=50,
-            save_path=None
+            save_path=None,
+            save_before_drag_path = None,
+            image_show_path = None
 ):
     
     w_load = torch.load(w_load_path)
@@ -16,11 +18,21 @@ def do_drag(w_load_path=None,
                         stylegan2_wieghts_path=stylegan2_wieghts_path)
     
     feat = drag_video.run(N_STEPS=N_STEPS,points=points)
-    image = drag_video.global_state['images']['image_raw']
+    
+    # print("keys: ",drag_video.global_state['images'].keys())
+    # for referece keys:  dict_keys(['image_orig', 'image_raw', 'image_show'])
 
     if save_path is not None:
+        image = drag_video.global_state['images']['image_raw']
         image.save(save_path)
     
+    if  save_before_drag_path is not None:
+        image = drag_video.global_state['images']['image_orig']
+        image.save(save_before_drag_path)
+    if image_show_path is not None:
+        image = drag_video.global_state['images']['image_show']
+        image.save(image_show_path)
+        
     return drag_video.global_state['images']#['image_raw']
 
 
@@ -31,7 +43,7 @@ import numpy as np
 from utils_draggan.draggan_utils import list2dict
 
 # get points used in argument
-def modify_landmarks(landmarks_path):
+def modify_landmarks(landmarks_path,MAX_SIZE=1024):
     """ 
     1.modify landmarks
     2.create points,targets
@@ -74,6 +86,10 @@ def modify_landmarks(landmarks_path):
     # bottom jaw up by 50 in y direction
     targets[range(6,11)] -= np.array([0, 50])
 
+    # cap the values of targets and points between 0 and MAX_SIZE
+    targets = np.clip(targets,0,MAX_SIZE-1)
+    points = np.clip(points,0,MAX_SIZE-1)
+    
     # ----------------------------------------------
     return list2dict(points,targets)
 

@@ -56,6 +56,7 @@ experiments_output_dir = f'{main_root_path}/output'
 
 # input_data_path = f'{main_root_path}/data/processed_images' #'./input_data' '/home/bean/DragVideo/Data_store/data/processed_images'
 input_data_path = '/home/bean/DragVideo/Data_store/data/processed_images_sg3'
+quad_values_path = 'home/bean/DragVideo/Data_store/data/quad_values'
 ### Inversion identifier, used to keeping track of the inversion results. Both the latent code and the generator
 input_data_id = 'barcelona'
 

@@ -63,6 +63,11 @@ def align_face(filepath, predictor, output_size):
     quad = np.stack([c - x - y, c - x + y, c + x + y, c + x - y])
     qsize = np.hypot(*x) * 2
 
+    #-------------------------
+    # return quad value; can be used for un-aligning the image
+    return_quad = quad.copy()
+    #-------------------------
+
     # read image
     img = PIL.Image.open(filepath)
 
@@ -111,9 +116,13 @@ def align_face(filepath, predictor, output_size):
         img = img.resize((output_size, output_size), PIL.Image.ANTIALIAS)
 
     # Return aligned image.
-    return img
+    return img, return_quad
 
 
+
+#===================================================================================================
+# delete "align_face_new" function after debugging. it is not needed.
+#===================================================================================================
 # exact copy of align_face; for debugging
 def align_face_new(filepath, predictor, output_size,enable_padding=True):
     """
