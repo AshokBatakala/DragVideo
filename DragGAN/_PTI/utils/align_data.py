@@ -33,16 +33,18 @@ def pre_process_images(raw_images_path,
             print(e)
 
     os.makedirs(save_output_path, exist_ok=True)
+    print("saving aligned images...")
     for image, name in zip(aligned_images, images_names):
         real_name = name.split('.')[0]
         image.save(f'{save_output_path}/{real_name}.jpg')
 
     os.makedirs(save_quad_values_path, exist_ok=True)
+    print("saving quad values...")
     for quad_value, name in zip(quad_values, images_names):
         real_name = name.split('.')[0]
         with open(f'{save_quad_values_path}/{real_name}.pkl', 'wb') as f:
             pickle.dump(quad_value, f)
-
+    print("done!")
 
     os.chdir(current_directory)
 

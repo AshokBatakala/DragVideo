@@ -51,7 +51,8 @@ def gif_from_folder(folder_path,gif_path,
 def make_video(path,
                 video_name='test_video',
                 fps=24,
-                ext=None): 
+                ext=None,
+                avi=False): 
     """Make a video from a folder of images.
     stores the video (.avi) in same folder as the images
 
@@ -68,8 +69,9 @@ def make_video(path,
     frame = cv2.imread(os.path.join(path, images[0]))
     height, width, layers = frame.shape
 
+    avi_path = os.path.join(path, f"{video_name}.avi")
     video = cv2.VideoWriter(
-        os.path.join(path, f"{video_name}.avi"),
+        avi_path,
         cv2.VideoWriter_fourcc(*"DIVX"),
         fps,
         (width, height),
@@ -80,6 +82,13 @@ def make_video(path,
 
     cv2.destroyAllWindows()
     video.release()
+
+    if not avi:
+        # avi2mp4(avi_path=None)
+        avi2mp4(avi_path=avi_path)
+        # delete avi file
+        os.remove(avi_path)
+        print("avi file deleted")
 
 
 # ==============================================
@@ -132,7 +141,7 @@ def extract_frames(video_path, output_path,n_digits_in_name=3,n_frames=None):
 # video side by side
 # ==============================================
 
-def video_side_by_side(video1_path, video2_path, output_path):
+def video_side_by_side(video1_path, video2_path, output_path="./temp/",only_video=True):
     # imports 
     import cv2
     import os
@@ -140,6 +149,7 @@ def video_side_by_side(video1_path, video2_path, output_path):
     # Read the video from specified path
     cam1 = cv2.VideoCapture(video1_path)
     cam2 = cv2.VideoCapture(video2_path)
+
     # extract frames
     try:
         # creating a folder named data
@@ -156,7 +166,7 @@ def video_side_by_side(video1_path, video2_path, output_path):
         ret2,frame2 = cam2.read()
         if ret1 and ret2:
             # if video is still left continue creating images
-            name = os.path.join(output_path, str(currentframe) + '.jpg')
+            name = os.path.join(output_path, str(currentframe).zfill(3) + '.jpg')
             print ('Creating...' + name)
             # writing the extracted images
             frame = np.concatenate((frame1, frame2), axis=1)
@@ -166,6 +176,17 @@ def video_side_by_side(video1_path, video2_path, output_path):
             currentframe += 1
         else:
             break
+
+    video1_name = os.path.basename(video1_path).split('.')[0]
+    video2_name = os.path.basename(video2_path).split('.')[0]
+    if only_video:
+        make_video(output_path,video_name=f"{video1_name}_{video2_name}_s2s",fps=24,ext='jpg',avi=False)
+        # delete frames
+        list_of_images = [os.path.join(output_path, image) for image in os.listdir(output_path) if image.endswith(".jpg")]
+        for image in list_of_images:
+            os.remove(image)
+        print("frames deleted")
+    
 
 
 # ==============================================
