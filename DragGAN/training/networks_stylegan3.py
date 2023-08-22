@@ -466,7 +466,7 @@ class SynthesisNetwork(torch.nn.Module):
         features = []
         
         #debug
-        print(f"ws.shape: {ws.shape}, self.num_ws: {self.num_ws}, self.w_dim: {self.w_dim}")
+        # print(f"ws.shape: {ws.shape}, self.num_ws: {self.num_ws}, self.w_dim: {self.w_dim}")
         
         misc.assert_shape(ws, [None, self.num_ws, self.w_dim])
         ws = ws.to(torch.float32).unbind(dim=1)

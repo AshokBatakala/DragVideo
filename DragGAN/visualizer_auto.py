@@ -15,6 +15,7 @@ import gradio as gr
 import numpy as np
 import torch
 from PIL import Image
+from tqdm import tqdm
 
 import dnnlib
 from gradio_utils import (ImageMask, draw_mask_on_image, draw_points_on_image,
@@ -238,7 +239,8 @@ def preprocess_mask_info(global_state, image):
 
 def on_click_start(global_state,
                    N_STEPS = 10,
-                    points=dict()):#, image):
+                    points=dict(),
+                    verbose=False):#, image):
 
     # example for global_state['points'] ; it is only used for updating image_draw
     # {0: {'start': [3, 4], 'target': [249, 214]},
@@ -292,18 +294,21 @@ def on_click_start(global_state,
     t_to_opt = reverse_point_pairs(t_in_pixels)
 
 
-
-    print('Running with:')
-    print(f'    Source: {p_in_pixels}')
-    print(f'    Target: {t_in_pixels}')
+    if verbose:
+        print('Running with:')
+        print(f'    Source: {p_in_pixels}')
+        print(f'    Target: {t_in_pixels}')
+        
     step_idx = 0
 
     feature_map = None
 
     # while True: # i changed this to for loop
-    for _ in range(N_STEPS):
-        print(f'p_to_opt: {p_to_opt}')
-        print(f't_to_opt: {t_to_opt}')
+    # for _ in range(N_STEPS):
+    for _ in tqdm(range(N_STEPS)):
+        if verbose:
+            print(f'p_to_opt: {p_to_opt}')
+            print(f't_to_opt: {t_to_opt}')
         # print(f'drag_mask: {drag_mask}')
         if global_state["temporal_params"]["stop"]:
             break
@@ -333,7 +338,8 @@ def on_click_start(global_state,
             to_pil=True)
 
         if step_idx % global_state['draw_interval'] == 0:
-            print('Current Source:')
+            if verbose:
+                print('Current Source:')
             for key_point, p_i, t_i in zip(valid_points, p_to_opt,
                                             t_to_opt):
                 global_state["points"][key_point]["start_temp"] = [
@@ -346,7 +352,8 @@ def on_click_start(global_state,
                 ]
                 start_temp = global_state["points"][key_point][
                     "start_temp"]
-                print(f'    {start_temp}')
+                if verbose:
+                    print(f'    {start_temp}')
 
             image_result = global_state['generator_params']['image']
             image_draw = update_image_draw(
@@ -432,7 +439,8 @@ class DragVideo:
     def __init__(self,
                     w_load=None,
                     stylegan2_wieghts_path=None,
-                    pretrained_model_name=None,):
+                    pretrained_model_name=None,
+                    verbose=False):
 
 
         self.previous_feature_map = None
@@ -441,6 +449,7 @@ class DragVideo:
         self.points_targets_dir = None
         self.output_dir = None
         self.cache_dir = None
+        self.verbose = verbose
         
         self.process_samples = []
 
@@ -491,6 +500,7 @@ class DragVideo:
         self.previous_feature_map =  on_click_start(self.global_state,
                 N_STEPS = N_STEPS,
                 points = points,
+                verbose=self.verbose
                  )
         return self.previous_feature_map,self.global_state['images']['image_show']
     

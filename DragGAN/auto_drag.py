@@ -9,13 +9,15 @@ def do_drag(w_load_path=None,
             N_STEPS=50,
             save_path=None,
             save_before_drag_path = None,
-            image_show_path = None
+            image_show_path = None,
+            verbose=False
 ):
     
     w_load = torch.load(w_load_path)
     # from visualizer_auto import DragVideo
     drag_video = DragVideo(w_load=w_load,
-                        stylegan2_wieghts_path=stylegan2_wieghts_path)
+                        stylegan2_wieghts_path=stylegan2_wieghts_path,
+                        verbose=verbose)
     
     feat = drag_video.run(N_STEPS=N_STEPS,points=points)
     
@@ -63,7 +65,16 @@ def modify_landmarks(landmarks_path,MAX_SIZE=1024):
     # #  off set by 100 from middle line ie. x = 512 
     # targets = np.array(points) - np.array([512,0])
     # targets = None
-
+    
+    # add 10 points along the bottom of the image with padding of 20
+    points = np.vstack([points, np.array([[i,MAX_SIZE-20] for i in range(10,MAX_SIZE-20,MAX_SIZE//10)])])
+    #add 10 points along the top,left,right of the image with padding of 20
+    points = np.vstack([points, np.array([[i,20] for i in range(10,MAX_SIZE-20,MAX_SIZE//10)])])
+    points = np.vstack([points, np.array([[20,i] for i in range(10,MAX_SIZE-20,MAX_SIZE//10)])])
+    points = np.vstack([points, np.array([[MAX_SIZE-20,i] for i in range(10,MAX_SIZE-20,MAX_SIZE//10)])])
+    
+    
+    
     targets = np.array(points).copy()
     # up the nose by 100 in y direction 
     # targets[range(27, 36)] -= np.array([0, 50])
@@ -87,6 +98,7 @@ def modify_landmarks(landmarks_path,MAX_SIZE=1024):
     targets[range(6,11)] -= np.array([0, 50])
 
     # cap the values of targets and points between 0 and MAX_SIZE
+    # so that they are within the image
     targets = np.clip(targets,0,MAX_SIZE-1)
     points = np.clip(points,0,MAX_SIZE-1)
     

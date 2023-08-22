@@ -5,6 +5,7 @@ from PIL import Image
 import os
 import cv2
 import matplotlib.pyplot as plt
+import subprocess
 
     
 #===============================================
@@ -47,6 +48,17 @@ def gif_from_folder(folder_path,gif_path,
 #===============================================
 # make video (avi)
 #===============================================
+
+def make_video_ffmpeg(images_path,
+                      ext='jpg',
+                      video_name='output',
+                      fps=24,
+                      ):
+    import os
+    import subprocess
+    #command to be used:     ffmpeg -framerate 24 -pattern_type glob -i './*.png' -c:v libx264 -pix_fmt yuv420p output.mp4 -y
+    subprocess.call(['ffmpeg', '-framerate', str(fps), '-pattern_type', 'glob', '-i', f'./*.{ext}', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', f'{video_name}.mp4', '-y'],cwd=images_path) 
+    
 
 def make_video(path,
                 video_name='test_video',
@@ -220,3 +232,22 @@ def avi2mp4(avi_path=None):
     # os.remove(avi_path)
     print("avi file deleted")
     return output_path
+
+# ==============================================
+#  to show cv2 image in jupyter notebook ; instead of cv2.imshow()
+# ==============================================
+import matplotlib.pyplot as plt
+import cv2
+def cv2_imshow(a, **kwargs):
+    a = a.clip(0, 255).astype('uint8')
+    # cv2 stores colors as BGR; convert to RGB
+    if a.ndim == 3:
+        if a.shape[2] == 4:
+            a = cv2.cvtColor(a, cv2.COLOR_BGRA2RGBA)
+        else:
+            a = cv2.cvtColor(a, cv2.COLOR_BGR2RGB)
+
+    return plt.imshow(a, **kwargs)
+
+
+

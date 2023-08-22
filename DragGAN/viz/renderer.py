@@ -367,7 +367,6 @@ class Renderer:
                     points[j] = point
 
             res.points = [[point[0], point[1]] for point in points]
-
             # Motion supervision
             loss_motion = 0
             res.stop = True

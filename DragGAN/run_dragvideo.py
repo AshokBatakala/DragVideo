@@ -14,13 +14,27 @@ import os
 # os.chdir(DragGAN_dir)
 
 from auto_drag import do_drag
-from auto_drag import modify_landmarks
+# from auto_drag import modify_landmarks
+from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose
 
-def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None,MAX_SIZE=1024):
+def run_dragvideo(Experiment_path,
+                  N_STEPS=100,
+                  CHECKPOINT_PATH=None,
+                  MAX_SIZE=1024,
+                  editing_function_name="large_eyes",
+                  verbose=False):
+    # print(f"run_dragvideo: verbose: {verbose}")	
     """
     CHECKPOINT_PATH: tuned_SG_pkl_path
     """
-
+    
+    editing_func_dict = {
+        "large_eyes":large_eyes.large_eyes,
+        "make_jaw_wider":make_jaw_wider.make_jaw_wider,
+        "mouth_wide":mouth_wide.mouth_wide,
+        "large_nose":large_nose.large_nose,
+    }
+    EDITING_FUNC = editing_func_dict[editing_function_name]
     landmarks_dir =  os.path.join(Experiment_path,'landmarks')
 
     def get_arguments(name):
@@ -28,8 +42,8 @@ def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None,MAX_SIZE=1024
         return {
             'w_load_path': os.path.join(Experiment_path,'latents','barcelona','PTI') + f"/{name}/0.pt",
             'stylegan2_wieghts_path' : CHECKPOINT_PATH,
-
-            'points' : modify_landmarks(landmarks_path,MAX_SIZE=MAX_SIZE),
+            # 'points': make_jaw_wider.make_jaw_wider(landmarks_path,MAX_SIZE=MAX_SIZE),
+            'points': EDITING_FUNC(landmarks_path,MAX_SIZE=MAX_SIZE),
             'N_STEPS': N_STEPS,
             'save_path': os.path.join(Experiment_path,'after_drag')+f"/{name}.png",
             'save_before_drag_path': os.path.join(Experiment_path,'before_drag')+f"/{name}.png",
@@ -47,7 +61,7 @@ def run_dragvideo(Experiment_path,N_STEPS=100,CHECKPOINT_PATH=None,MAX_SIZE=1024
 
     for name in names:
         args = get_arguments(name)
-        do_drag(**args)
+        do_drag(**args,verbose=verbose)
         
         
 
@@ -60,13 +74,22 @@ if __name__ == "__main__":
     parser.add_argument("--N_STEPS", type=int, help="N_STEPS")
     parser.add_argument("--CHECKPOINT_PATH", type=str, help="CHECKPOINT_PATH")
     parser.add_argument("--MAX_SIZE", type=int, help="MAX_SIZE",default=1024)
+    parser.add_argument("--editing_function_name", type=str, help="editing_function_name",default="large_eyes")
+    parser.add_argument("--verbose", type=bool, help="verbose",default=False)
     args = parser.parse_args()
     
     Experiment_path = args.Experiment_path
     N_STEPS = args.N_STEPS
     CHECKPOINT_PATH = args.CHECKPOINT_PATH
+
+    print("editing_function_name:",args.editing_function_name)
+    run_dragvideo(Experiment_path,
+                  N_STEPS=N_STEPS,
+                  CHECKPOINT_PATH=CHECKPOINT_PATH,
+                  MAX_SIZE=args.MAX_SIZE,
+                  editing_function_name=args.editing_function_name,
+                  verbose=args.verbose)
     
-    run_dragvideo(Experiment_path,N_STEPS=N_STEPS,CHECKPOINT_PATH=CHECKPOINT_PATH,MAX_SIZE=args.MAX_SIZE)
     print("Done!")
     
     
