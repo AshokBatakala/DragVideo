@@ -139,3 +139,7 @@ venv.bak/
 lightning_logs/
 MNIST
 .DS_Store
+
+
+# some folders 
+stylegan3-editing/
