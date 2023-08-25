@@ -1,7 +1,7 @@
 # Ashok added this file
 
 import torch
-from visualizer_auto import DragVideo
+from _visualizer_auto import DragVideo
 
 def do_drag(w_load_path=None,
             stylegan2_wieghts_path=None,

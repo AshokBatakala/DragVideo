@@ -13,7 +13,7 @@ import os
 # DragGAN_dir = "/home/bean/DragVideo/DragGAN"
 # os.chdir(DragGAN_dir)
 
-from auto_drag import do_drag
+from _auto_drag import do_drag
 # from auto_drag import modify_landmarks
 from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose
 
