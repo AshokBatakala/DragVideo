@@ -39,9 +39,16 @@ class ffmpeg:
                        output_frames_dir,
                        n_digits_in_name=3,
                        ext='png',
-                       fps=24):
+                       fps=24,
+                       first_n_frames=None,
+                          ):
         # ffmpeg -i delete.mp4 -vf "fps=24" -start_number 0 -q:v 1 ./frames/%03d.png
-        command = f'ffmpeg -i {video_path} -vf "fps={fps}" -start_number 0 -q:v 1 {output_frames_dir}/%0{n_digits_in_name}d.{ext}'
+        if first_n_frames is not None:
+            # command += f' -vframes {first_n_frames}'
+            command = f'ffmpeg -i {video_path} -vf "fps={fps}" -start_number 0 -q:v 1  -vframes {first_n_frames} {output_frames_dir}/%0{n_digits_in_name}d.{ext}'
+        else:
+            command = f'ffmpeg -i {video_path} -vf "fps={fps}" -start_number 0 -q:v 1 {output_frames_dir}/%0{n_digits_in_name}d.{ext}'
+
         subprocess.call(command,shell=True)
         
 
@@ -69,7 +76,7 @@ class ffmpeg:
         
         output_video_path = os.path.join(output_dir,output_name+".mp4")
         print(output_video_path)
-        command = f'ffmpeg -i {video1_path} -i {video2_path} -filter_complex "[0:v] [1:v] hstack=inputs=2:shortest=1" {output_video_path} -y'
+        command = f'ffmpeg -i {video1_path} -i {video2_path} -filter_complex "[0:v] [1:v] hstack=inputs=2:shortest=1" -shortest {output_video_path} -y'
         subprocess.call(command,shell=True)
         
         
@@ -82,5 +89,5 @@ class ffmpeg:
         
         output_video_path = os.path.join(output_dir,output_name+".mp4")
         print(output_video_path)
-        command = f'ffmpeg -i {video1_path} -i {video2_path} -filter_complex "[0:v] [1:v] vstack=inputs=2:shortest=1" {output_video_path} -y'
+        command = f'ffmpeg -i {video1_path} -i {video2_path} -filter_complex "[0:v] [1:v] vstack=inputs=2:shortest=1" -shortest {output_video_path} -y'
         subprocess.call(command,shell=True)

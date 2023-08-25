@@ -16,6 +16,7 @@ dragvideo:v1 = just conda is installed
 dragvideo:v2 = complete draggan env is installed in conda: stylegan3 ( yml + requirements )
 dragvideo:v3 = pti_requirements
 dragvideo:v4 = cv2 (RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y)
+dragvideo:v5 = pyrallis
 
 
 example run 

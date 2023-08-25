@@ -27,8 +27,8 @@ def large_eyes(landmarks_path,MAX_SIZE=1024):
     # make eyes larger by 50 in y direction
     # pick one points from bottom, top of the eye then move it up or down
     
-    points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=1, sides=['bottom'])
-    targets = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=1, sides=['bottom'])
+    points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
+    targets = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
     # right eye
     points = np.vstack([points,landmarks[37]])
     # points.append(landmarks[37])
