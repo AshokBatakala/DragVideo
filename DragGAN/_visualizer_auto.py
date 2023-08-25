@@ -171,72 +171,6 @@ def preprocess_mask_info(global_state, image):
     return global_state
 
 
-# # gives a dict of valid checkpoints in cache_dir 
-# valid_checkpoints_dict = {
-#     f.split('/')[-1].split('.')[0]: osp.join(cache_dir, f)
-#     for f in os.listdir(cache_dir)
-#     if (f.endswith('pkl') and osp.exists(osp.join(cache_dir, f)))
-# }
-
-
-# print(f'File under cache_dir ({cache_dir}):')
-# print(os.listdir(cache_dir))
-# print('Valid checkpoint file:')
-# print(valid_checkpoints_dict)
-
-
-# # stylegan model name to be used .pkl file
-# # dir => DragGAN/checkpoints
-# # init_pkl = 'stylegan2_lions_512_pytorch' 
-# init_pkl = 'stylegan2-ffhq-512x512'
-
-
-
-# # # renderer = Renderer()
-# global_state = {#gr.State({
-#     "images": {
-#         # image_orig: the original image, change with seed/model is changed
-#         # image_raw: image with mask and points, change durning optimization
-#         # image_show: image showed on screen
-#     },
-#     "temporal_params": {
-#         # stop
-#     },
-#     'mask':
-#     None,  # mask for visualization, 1 for editing and 0 for unchange
-#     'last_mask': None,  # last edited mask
-#     'show_mask': True,  # add button
-#     "generator_params": dnnlib.EasyDict(),
-#     "params": {
-#         "seed": 0,
-#         "motion_lambda": 20,
-#         "r1_in_pixels": 3,
-#         "r2_in_pixels": 12,
-#         "magnitude_direction_in_pixels": 1.0,
-#         "latent_space": "w+",
-#         "trunc_psi": 0.7,
-#         "trunc_cutoff": None,
-#         "lr": 0.001,
-#     },
-#     "device": device,
-#     "draw_interval": 1,
-#     "renderer": Renderer(disable_timing=True),
-#     "points": {},
-#     "curr_point": None,
-#     "curr_type_point": "start",
-#     'editing_state': 'add_points',
-#     'pretrained_weight': 'stylegan2-ffhq-512x512'
-#     # 'pretrained_weight': 'stylegan3-r-ffhqu-1024_module' #downloaded .pt from 3rd time repo
-#     #'pretrained_weight': 'stylegan3-r-ffhqu-256x256'# changed to fit 256 model in do drag.
-#     # 'stylegan2-ffhq-512x512' # model weights pkl in cache_dir
-#     # /home/bean/DragVideo/DragGAN/checkpoints/stylegan3-r-ffhqu-256x256.pkl
-# # })
-# }
-
-# # # init image
-# global_state = init_images(global_state)
-
-
 def on_click_start(global_state,
                    N_STEPS = 10,
                     points=dict(),
@@ -244,8 +178,7 @@ def on_click_start(global_state,
 
     # example for global_state['points'] ; it is only used for updating image_draw
     # {0: {'start': [3, 4], 'target': [249, 214]},
-    # 1: {'start': [506, 505], 'target': [503, 504]},
-    # 2: {'start': [3, 243], 'target': [506, 239]}}
+    # 1: {'start': [3, 243], 'target': [506, 239]}}
 
     # Source: [[251, 360], [249, 380]]
     # Target: [[251, 362], [251, 366]]
@@ -365,33 +298,6 @@ def on_click_start(global_state,
             )
             global_state['images']['image_raw'] = image_result
 
-        # yield (
-        #     global_state,
-        #     step_idx,
-        #     global_state['images']['image_show'],
-        #     # gr.File.update(visible=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     # latent space
-        #     gr.Radio.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     # enable stop button in loop
-        #     gr.Button.update(interactive=True),
-
-        #     # update other comps
-        #     gr.Dropdown.update(interactive=False),
-        #     gr.Number.update(interactive=False),
-        #     gr.Number.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Button.update(interactive=False),
-        #     gr.Checkbox.update(interactive=False),
-        #     # gr.Number.update(interactive=False),
-        #     gr.Number.update(interactive=False),
-        # )
-
         # increate step
         step_idx += 1
 
@@ -403,34 +309,8 @@ def on_click_start(global_state,
                                     global_state['show_mask'],
                                     global_state)
 
-    # fp = NamedTemporaryFile(suffix=".png", delete=False)
-    # image_result.save(fp, "PNG")
 
     global_state['editing_state'] = 'add_points'
-
-    # yield (
-    #     global_state,
-    #     0,  # reset step to 0 after stop.
-    #     global_state['images']['image_show'],
-    #     # gr.File.update(visible=True, value=fp.name),
-    #     gr.Button.update(interactive=True),
-    #     gr.Button.update(interactive=True),
-    #     gr.Button.update(interactive=True),
-    #     gr.Button.update(interactive=True),
-    #     gr.Button.update(interactive=True),
-    #     # latent space
-    #     gr.Radio.update(interactive=True),
-    #     gr.Button.update(interactive=True),
-    #     # NOTE: disable stop button with loop finish
-    #     gr.Button.update(interactive=False),
-
-    #     # update other comps
-    #     gr.Dropdown.update(interactive=True),
-    #     gr.Number.update(interactive=True),
-    #     gr.Number.update(interactive=True),
-    #     gr.Checkbox.update(interactive=True),
-    #     gr.Number.update(interactive=True),
-    # )
 
     return feature_map
 
