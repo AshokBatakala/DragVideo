@@ -9,12 +9,8 @@
 
 # visualizer_experiment.ipynb
 import os
-# import pickle
-# DragGAN_dir = "/home/bean/DragVideo/DragGAN"
-# os.chdir(DragGAN_dir)
 
-from _auto_drag import do_drag
-# from auto_drag import modify_landmarks
+from _do_drag import do_drag
 from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose
 
 def run_dragvideo(Experiment_path,
@@ -23,11 +19,12 @@ def run_dragvideo(Experiment_path,
                   MAX_SIZE=1024,
                   editing_function_name="large_eyes",
                   verbose=False):
-    # print(f"run_dragvideo: verbose: {verbose}")	
     """
+    one frames at a time to do_drag() function    
     CHECKPOINT_PATH: tuned_SG_pkl_path
-    """
     
+    """
+    # editing function
     editing_func_dict = {
         "large_eyes":large_eyes.large_eyes,
         "make_jaw_wider":make_jaw_wider.make_jaw_wider,
@@ -36,7 +33,8 @@ def run_dragvideo(Experiment_path,
     }
     EDITING_FUNC = editing_func_dict[editing_function_name]
     landmarks_dir =  os.path.join(Experiment_path,'landmarks')
-
+    
+    # get arguments
     def get_arguments(name):
         landmarks_path =os.path.join(landmarks_dir,str(name)+".pkl")# f"/home/bean/DragVideo/Data_store/data/PTI_results/landmarks/{name}.pkl"
         return {
@@ -48,16 +46,15 @@ def run_dragvideo(Experiment_path,
             'save_path': os.path.join(Experiment_path,'after_drag')+f"/{name}.png",
             'save_before_drag_path': os.path.join(Experiment_path,'before_drag')+f"/{name}.png",
             'image_show_path': os.path.join(Experiment_path,'image_show')+f"/{name}.png",
+            'edited_latents_dir': os.path.join(Experiment_path,'latents','edited',str(name)),
         }
         
     latents_dir = os.path.join(Experiment_path,'latents') + "/barcelona/PTI"
 
     #  run draggan on based on latents availability
-
     temp = os.listdir(latents_dir)
     temp.sort()
     names = [i.split('.')[0] for i in temp]
-    # names
 
     for name in names:
         args = get_arguments(name)
