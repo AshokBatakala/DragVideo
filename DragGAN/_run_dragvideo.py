@@ -11,7 +11,7 @@
 import os
 
 from _do_drag import do_drag
-from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose
+from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose,nose_to_mouth
 
 def run_dragvideo(Experiment_path,
                   N_STEPS=100,
@@ -30,6 +30,7 @@ def run_dragvideo(Experiment_path,
         "make_jaw_wider":make_jaw_wider.make_jaw_wider,
         "mouth_wide":mouth_wide.mouth_wide,
         "large_nose":large_nose.large_nose,
+        "nose_to_mouth":nose_to_mouth.nose_to_mouth,
     }
     EDITING_FUNC = editing_func_dict[editing_function_name]
     landmarks_dir =  os.path.join(Experiment_path,'landmarks')
