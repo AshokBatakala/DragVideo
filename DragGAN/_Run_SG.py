@@ -1,3 +1,10 @@
+# Author: Ashok B
+# date: 2023/08/25
+
+# to decode latent using stylegan2 or stylegan3
+#-----------------------------------------------
+print("use _Run_SG.lazy_Run instead of _Run_SG.Run  ")
+
 import torch
 import pickle
 
@@ -87,6 +94,7 @@ def plot(img):
     plt.show()
     
     
+    
 def Run(sg_pkl,ws_path,_device="cuda",want_plot=False):
     G = load_G(sg_pkl).to(_device)
     #check if ws is .pt or .pkl
@@ -95,6 +103,36 @@ def Run(sg_pkl,ws_path,_device="cuda",want_plot=False):
     else:
         ws = pickle.load(open(ws_path,'rb'))
         ws = torch.tensor(ws)
+    ws = ws.to(_device)
+    img = run_SG(G,ws)
+    if want_plot:
+        plot(img)
+    return img
+
+
+def lazy_Run(sg_pkl,ws_path,_device="cuda",want_plot=False):
+    """ takes either a tensor or a file path as input for ws_path"""
+    import numpy as np
+    G = load_G(sg_pkl).to(_device)
+    
+    #check if ws is file path or tensor
+    if isinstance(ws_path,str):
+        #check if ws is .pt or .pkl
+        if ws_path.endswith('.pt'):
+            ws = torch.load(ws_path)
+        else:
+            ws = pickle.load(open(ws_path,'rb'))
+            ws = torch.tensor(ws)
+    else:
+        #check if it is tensor or numpy array
+        if isinstance(ws_path,np.ndarray):
+            ws = torch.tensor(ws_path)
+        elif isinstance(ws_path,torch.Tensor):
+            ws = ws_path
+        else:
+            print('Error: ws_path should be either a file path, tensor or numpy array')
+            return None
+    
     ws = ws.to(_device)
     img = run_SG(G,ws)
     if want_plot:
