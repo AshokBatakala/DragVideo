@@ -328,6 +328,9 @@ class DragVideo:
                     pretrained_model_name=None,
                     edited_latents_dir=None,
                     verbose=False):
+        """
+        to give custom w_load, use w_load = torch.load('path/to/latent.pt')
+        """
 
         # # make the directory for edited latents
         if not os.path.exists(edited_latents_dir):
