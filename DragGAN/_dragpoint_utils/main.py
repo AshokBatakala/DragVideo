@@ -25,24 +25,20 @@ def get_border_points(MAX_SIZE=1024, padding=20, num_points=10, points=None,side
     bag = []
         
     # #bottom,top,left,right
-    # if 'bottom' in sides:
-    #     points = np.vstack([points, np.array([[i,MAX_SIZE-padding] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)])])
-    # if 'top' in sides:
-    #     points = np.vstack([points, np.array([[i,padding] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)])])
-    # if 'left' in sides:
-    #     points = np.vstack([points, np.array([[padding,i] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)])])
-    # if 'right' in sides:
-    #     points = np.vstack([points, np.array([[MAX_SIZE-padding,i] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)])])
-    # return points
-    
+        
+    start = padding 
+    end = MAX_SIZE-padding
+    gap = (end-start)//(num_points)
+    i_values = range(start,end,gap)
     if "bottom" in sides:
-        bag.append(np.array([[i,MAX_SIZE-padding] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)]))
+        bag.append(np.array([[i,MAX_SIZE-padding] for i in i_values]))
     if "top" in sides:
-        bag.append(np.array([[i,padding] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)]))
+        bag.append(np.array([[i,padding] for i in i_values]))
     if "left" in sides:
-        bag.append(np.array([[padding,i] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)]))
+        bag.append(np.array([[padding,i] for i in i_values]))
     if "right" in sides:
-        bag.append(np.array([[MAX_SIZE-padding,i] for i in range(padding,MAX_SIZE-padding,MAX_SIZE//num_points)]))
+        bag.append(np.array([[MAX_SIZE-padding,i] for i in i_values]))
+        
         
     if points.size == 0:
         return np.vstack(bag)
