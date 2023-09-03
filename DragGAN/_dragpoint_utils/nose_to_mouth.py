@@ -30,8 +30,16 @@ def nose_to_mouth(landmarks_path,MAX_SIZE=1024):
     points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
     targets = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
     
-    points = np.vstack([points,(landmarks[34] +landmarks[31])/2])
-    targets = np.vstack([targets, landmarks[67]])
+    nose_tip = (landmarks[34] +landmarks[31])/2
+    nose_tip = nose_tip.astype(int)
+    
+    points = np.vstack([points, nose_tip])
+    targets = np.vstack([targets, landmarks[63]])
+    
+    # keep 1 to 27 unchanged in points and targets
+    points = np.vstack([points, landmarks[0:28]])
+    targets = np.vstack([targets, landmarks[0:28]])
+    
     
     # ----------------------------------------------
     #clip points and targets
