@@ -11,7 +11,7 @@
 import os
 
 from _do_drag import do_drag
-from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose,nose_to_mouth
+from _dragpoint_utils import large_eyes,make_jaw_wider,mouth_wide,large_nose,nose_to_mouth,smile
 
 def run_dragvideo(Experiment_path,
                   N_STEPS=100,
@@ -31,6 +31,7 @@ def run_dragvideo(Experiment_path,
         "mouth_wide":mouth_wide.mouth_wide,
         "large_nose":large_nose.large_nose,
         "nose_to_mouth":nose_to_mouth.nose_to_mouth,
+        "smile": smile.smile,
     }
     EDITING_FUNC = editing_func_dict[editing_function_name]
     landmarks_dir =  os.path.join(Experiment_path,'landmarks')
@@ -57,6 +58,7 @@ def run_dragvideo(Experiment_path,
     temp.sort()
     names = [i.split('.')[0] for i in temp]
 
+    print(f"Total {len(names)} images to be processed")
     for name in names:
         args = get_arguments(name)
         do_drag(**args,verbose=verbose)
