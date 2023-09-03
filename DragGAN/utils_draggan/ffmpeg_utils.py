@@ -91,3 +91,19 @@ class ffmpeg:
         print(output_video_path)
         command = f'ffmpeg -i {video1_path} -i {video2_path} -filter_complex "[0:v] [1:v] vstack=inputs=2:shortest=1" -shortest {output_video_path} -y'
         subprocess.call(command,shell=True)
+        
+    @staticmethod
+    def seperate_hstack(video_path,
+                        output_dir = None
+                        ):
+        """ 
+        seperate hstack video into two videos
+        """
+        if output_dir is None:
+            output_dir = os.path.dirname(video_path)
+        video_name = os.path.basename(video_path).split('.')[0]
+        left_video_path = os.path.join(output_dir,video_name+"_left.mp4")
+        right_video_path = os.path.join(output_dir,video_name+"_right.mp4")
+        command = f'ffmpeg -i {video_path} -filter_complex "[0:v]crop=iw/2:ih:0:0[left];[0:v]crop=iw/2:ih:iw/2:0[right]" -map "[left]" {left_video_path} -map "[right]" {right_video_path} -y'
+        subprocess.call(command,shell=True)
+    
