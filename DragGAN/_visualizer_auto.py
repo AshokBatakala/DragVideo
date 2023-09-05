@@ -327,6 +327,8 @@ class DragVideo:
                     stylegan2_wieghts_path=None,
                     pretrained_model_name=None,
                     edited_latents_dir=None,
+                    border_mask = True,
+                    border_mask_fraction = 0.1,
                     verbose=False):
         """
         to give custom w_load, use w_load = torch.load('path/to/latent.pt')
@@ -388,7 +390,16 @@ class DragVideo:
         # init image
         self.global_state = init_images(self.global_state  ,w_load=w_load,stylegan2_wieghts_path=stylegan2_wieghts_path)
 
-
+        # mask  (1024, 1024) uint8 all 1s
+        # make border 0s in mask; to fix it.
+        if border_mask:
+            image_size_x, image_size_y = self.global_state['mask'].shape
+            border_size_x, border_size_y = int(border_mask_fraction*image_size_x), int(border_mask_fraction*image_size_y)
+            self.global_state['mask'][:border_size_x,:] = 0
+            self.global_state['mask'][-border_size_x:,:] = 0
+            self.global_state['mask'][:,:border_size_y] = 0
+            self.global_state['mask'][:,-border_size_y:] = 0
+       
 
     def run(self,N_STEPS = 10,points = None):
         self.previous_feature_map =  self.on_click_start(self.global_state,
@@ -472,7 +483,10 @@ class DragVideo:
             if verbose:
                 print(f'p_to_opt: {p_to_opt}')
                 print(f't_to_opt: {t_to_opt}')
-            # print(f'drag_mask: {drag_mask}')
+                
+            # print(f'drag_mask shape : {drag_mask.shape, type(drag_mask), drag_mask.dtype}') 
+            #drag_mask shape : (torch.Size([1024, 1024]), <class 'torch.Tensor'>, torch.float32)
+
             if global_state["temporal_params"]["stop"]:
                 break
 
