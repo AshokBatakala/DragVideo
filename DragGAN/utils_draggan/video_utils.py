@@ -154,6 +154,7 @@ def extract_frames(video_path, output_path,n_digits_in_name=3,n_frames=None):
 # ==============================================
 
 def video_side_by_side(video1_path, video2_path, output_path="./temp/",only_video=True):
+    """ use ffmpeg_utils instead ( hstack)"""
     # imports 
     import cv2
     import os
