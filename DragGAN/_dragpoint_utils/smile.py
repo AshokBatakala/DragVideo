@@ -27,8 +27,8 @@ def smile(landmarks_path,MAX_SIZE=1024):
     # make eyes larger by 50 in y direction
     # pick one points from bottom, top of the eye then move it up or down
     
-    points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
-    targets = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
+    # points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
+    # targets = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=7, sides=['bottom'])
     
     # nose_tip = (landmarks[34] +landmarks[31])/2
     # nose_tip = nose_tip.astype(int)
@@ -38,9 +38,13 @@ def smile(landmarks_path,MAX_SIZE=1024):
     
     
     # move point 61 up by 50 left by 50
-    points = np.vstack([points, landmarks[49]])
-    targets = np.vstack([targets, landmarks[49] + np.array([-50,-50])])
-    
+    # points = np.vstack([points, landmarks[49]])
+    # targets = np.vstack([targets, landmarks[49] + np.array([-50,-50])])
+
+    points = np.array([landmarks[49]])
+    smile_values = 20
+    # targets = np.array([landmarks[49] + np.array([-50,-50])])
+    targets = np.array([landmarks[49] + np.array([-smile_values,-smile_values])])
     
     # ----------------------------------------------
     #clip points and targets
