@@ -22,7 +22,9 @@ def make_jaw_wider(landmarks_path,MAX_SIZE=1024):
     #       modifications here
     # ----------------------------------------------
     
-    points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=10, points=points,sides=['bottom','top','left','right'])
+    # points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=10, points=points,sides=['bottom','top','left','right'])
+
+    points = get_border_points(MAX_SIZE=MAX_SIZE, padding=20, num_points=20, points=points,sides=['bottom'])
     
     targets = np.array(points).copy()
     # up the nose by 100 in y direction 
@@ -39,12 +41,14 @@ def make_jaw_wider(landmarks_path,MAX_SIZE=1024):
     # targets[dict_landmarks['left_eye']] += np.array([50, 0])
     # targets[dict_landmarks['right_eye']] -= np.array([50, 0])
 
+
+    offset = 50
     # make jaw wider by 50 in x direction
-    targets[range(0,6)] -= np.array([50, 0]) 
-    targets[range(11,17)] += np.array([50, 0])
+    targets[range(0,6)] -= np.array([offset, 0]) 
+    targets[range(11,17)] += np.array([offset, 0])
 
     # bottom jaw up by 50 in y direction
-    targets[range(6,11)] -= np.array([0, 50])
+    targets[range(6,11)] -= np.array([0, offset])
 
     points,targets = clip_points_targets(points,targets,MAX_SIZE=MAX_SIZE)
     

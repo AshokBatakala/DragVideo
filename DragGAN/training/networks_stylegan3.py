@@ -462,7 +462,17 @@ class SynthesisNetwork(torch.nn.Module):
             setattr(self, name, layer)
             self.layer_names.append(name)
 
-    def forward(self, ws, return_feature=False, **layer_kwargs):
+    def forward(self, ws, return_feature=False,set_feature=None, **layer_kwargs):
+        """
+        added set_feature
+        
+        ex:
+        set_feature = {
+            "layer_num": 3,
+            "feature": x
+        }
+        
+        """
         features = []
         
         #debug
@@ -473,9 +483,21 @@ class SynthesisNetwork(torch.nn.Module):
 
         # Execute layers.
         x = self.input(ws[0])
+        
+        layer_count = 0
         for name, w in zip(self.layer_names, ws[1:]):
             x = getattr(self, name)(x, w, **layer_kwargs)
             features.append(x)
+            layer_count += 1
+            #if you have to set feature, you can use this
+            if set_feature and layer_count == set_feature["layer_num"]:
+                print(f"type of x: {type(x)} \n x.shape: {x.shape}")
+                given_feature = set_feature["feature"]
+                print(f"type of given_feature: {type(given_feature)} \n given_feature.shape: {given_feature.shape}")
+                
+                
+                x = torch.tensor(given_feature,dtype= x.dtype, device=x.device)
+                print(f"set feature: {x.shape}")
         if self.output_scale != 1:
             x = x * self.output_scale
 
@@ -519,14 +541,20 @@ class Generator(torch.nn.Module):
         self.mapping = MappingNetwork(z_dim=z_dim, c_dim=c_dim, w_dim=w_dim, num_ws=self.num_ws, **mapping_kwargs)
         self.resize = resize
 
-    def forward(self, z, c, truncation_psi=1, truncation_cutoff=None, update_emas=False, input_is_w=False, return_feature=False, **synthesis_kwargs):
+    def forward(self, z, c, truncation_psi=1, truncation_cutoff=None, update_emas=False,
+                input_is_w=False, return_feature=False,
+                set_feature = None,
+                **synthesis_kwargs):
         if input_is_w:
             ws = z
             if ws.dim() == 2:
                 ws = ws.unsqueeze(1).repeat([1, self.mapping.num_ws, 1])
         else:
             ws = self.mapping(z, c, truncation_psi=truncation_psi, truncation_cutoff=truncation_cutoff, update_emas=update_emas)
-        img = self.synthesis(ws, update_emas=update_emas, return_feature=return_feature, **synthesis_kwargs)
+        img = self.synthesis(ws, update_emas=update_emas,
+                             return_feature=return_feature,
+                             set_feature = set_feature,
+                             **synthesis_kwargs)
         if return_feature:
             img, feature = img
         if self.resize is not None:

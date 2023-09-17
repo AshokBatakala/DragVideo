@@ -283,7 +283,7 @@ class Renderer:
         points          = [],
         targets         = [],
         mask            = None,
-        lambda_mask     = 10,
+        lambda_mask     = 10,# 10
         reg             = 0,
         feature_idx     = 5,
         r1              = 3,

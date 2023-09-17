@@ -42,7 +42,7 @@ def smile(landmarks_path,MAX_SIZE=1024):
     # targets = np.vstack([targets, landmarks[49] + np.array([-50,-50])])
 
     points = np.array([landmarks[49]])
-    smile_values = 20
+    smile_values = 50
     # targets = np.array([landmarks[49] + np.array([-50,-50])])
     targets = np.array([landmarks[49] + np.array([-smile_values,-smile_values])])
     

@@ -395,10 +395,10 @@ class DragVideo:
         if border_mask:
             image_size_x, image_size_y = self.global_state['mask'].shape
             border_size_x, border_size_y = int(border_mask_fraction*image_size_x), int(border_mask_fraction*image_size_y)
-            self.global_state['mask'][:border_size_x,:] = 0
-            self.global_state['mask'][-border_size_x:,:] = 0
-            self.global_state['mask'][:,:border_size_y] = 0
-            self.global_state['mask'][:,-border_size_y:] = 0
+            # self.global_state['mask'][:border_size_x,:] = 0
+            self.global_state['mask'][-border_size_x:,:] = 0 #bottom
+            # self.global_state['mask'][:,:border_size_y] = 0
+            # self.global_state['mask'][:,-border_size_y:] = 0
        
 
     def run(self,N_STEPS = 10,points = None):

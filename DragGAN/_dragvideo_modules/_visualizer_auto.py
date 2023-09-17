@@ -277,7 +277,7 @@ class DragVideo_Base:
     def drag_one_frame(self,w_load_path,
                        points=dict(),
                        N_STEPS=10,
-                       use_border_mask = True,
+                       use_border_mask = False,
                     border_mask_fraction = 0.1,):
         #load latent
         renderer = self.global_state['renderer']

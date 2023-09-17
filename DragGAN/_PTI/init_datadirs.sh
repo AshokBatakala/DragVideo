@@ -31,7 +31,7 @@ then
 fi
 mkdir -p $1
 cd $1
-mkdir -p raw cropped aligned after_drag latents tuned_SG  after_drag_pasted videos landmarks before_drag image_show quad_values
+mkdir -p raw  aligned  latents tuned_SG    landmarks   quad_values
 touch log.txt
 
 
