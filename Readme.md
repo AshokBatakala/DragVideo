@@ -1,3 +1,6 @@
+#About
+This project aims to reshape human faces in spatio temporally consistent way.
+
 # some priliminary results
 Left : original video  
 Right : edited video
