@@ -1,12 +1,19 @@
-# About  
-This project aims to reshape human faces in spatio temporally consistent way.
+# About
+This project aims to reshape human faces in a spatio-temporally consistent way.
 
-# some priliminary results
-Left : original video  
-Right : edited video
-<video src='https://github.com/AshokBatakala/DragVideo/assets/111169763/afec5fd6-fc09-4bec-a0c5-402328c0c5e4' width=180/>
+## Preliminary Results
 
-<video src='https://github.com/AshokBatakala/DragVideo/assets/111169763/45488273-eda2-4e68-893b-d60fd97fa916' width=180/>
+**Comparison Setup:**
+* **Left:** Original video
+* **Right:** Edited video
 
-visauce video
-<video src="https://github.com/AshokBatakala/DragVideo/assets/111169763/95f22684-01a4-417d-bd33-295502136adc" width=180/>
+### Wider Face
+Face transformed to be broader:
+
+<video src="https://github.com/AshokBatakala/DragVideo/assets/111169763/afec5fd6-fc09-4bec-a0c5-402328c0c5e4" width="180" />
+<video src="https://github.com/AshokBatakala/DragVideo/assets/111169763/45488273-eda2-4e68-893b-d60fd97fa916" width="180" />
+
+### Narrow Face
+Face transformed to be narrower:
+
+<video src="https://github.com/AshokBatakala/DragVideo/assets/111169763/95f22684-01a4-417d-bd33-295502136adc" width="180" />
