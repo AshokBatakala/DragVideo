@@ -1,6 +1,9 @@
 # About
 This project aims to reshape human faces in a spatio-temporally consistent way.
 
+## network pipeline
+![Network Pipeline](https://github.com/AshokBatakala/DragVideo/raw/master/assets/DragVideo_pipeline_diagram.png)
+
 ## Preliminary Results
 
 **Comparison Setup:**
