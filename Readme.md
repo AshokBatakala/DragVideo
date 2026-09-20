@@ -1,5 +1,7 @@
 # About
-This project aims to reshape human faces in a spatio-temporally consistent way.
+
+This project aims to reshape human faces in videos, in a spatio-temporally consistent way.
+- Motion supervision based latent code editing is performed in the latent space of styleGAN to create desired edits.
 
 ## network pipeline
 ![Network Pipeline](https://github.com/AshokBatakala/DragVideo/raw/master/assets/DragVideo_pipeline_diagram.png)
